@@ -64,7 +64,7 @@ export class TokenTradeService {
     };
 
     this.ws.onmessage = (event) => {
-      console.log(event)
+      console.log(event )
       const data = JSON.parse(event.data);
       this.tokenCreationSubject.next(data);
     };

@@ -1,0 +1,46 @@
+<div>
+  <button (click)="saveData()">
+    SAVE DATA
+  </button>
+  <app-file-upload (apply)="getMockedData($event)">
+  </app-file-upload>
+  <div *ngFor="let trader of traders">
+    <div>
+      <h3>
+        Trader: {{trader.traderPublicKey}}
+      </h3>
+      <p>
+        Total bought SOL: {{trader.totalBoughtSol}} <br>
+        Total sold SOL: {{trader.totalSoldSol}} <br>
+        Total trades: {{trader.totalTrades}} <br>
+      </p>
+      <button (click)="trader.coinsExpanded = !trader.coinsExpanded"> Expand Coins</button>
+    </div>
+
+    <div *ngIf="!!trader.coinsTraded?.length && trader.coinsExpanded" style="margin-left: 50px">
+      <h4>
+        Coins:
+      </h4>
+      <div *ngFor="let coin of trader.coinsTraded">
+        <div>
+          Address: {{coin.mint}}<br>
+          MC: {{coin.marketCapSol}}<br>
+          PNL on coin: {{coin.realizedPnl}}<br>
+          Rest PNL on coin: {{coin.unrealizedPnl}}<br>
+        </div>
+
+        <button (click)="coin.tradesExpanded = !coin.tradesExpanded" *ngIf="coin.trades?.length">Show Trades</button>
+
+        <div *ngIf="coin.tradesExpanded && coin.trades?.length" style="margin-left: 100px">
+          Trades:
+          <div *ngFor="let trade of coin.trades" ><br>
+            Token Amount: {{trade.tokenAmount}} <br>
+            Side: {{trade.txType}}<br>
+            MC: {{trade.marketCapSol}}<br>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
